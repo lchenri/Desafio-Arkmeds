@@ -10,7 +10,7 @@ from api.serializers import EquipamentoSerializer
 
 
 @api_view(['GET', 'POST'])
-def equipamentos_get_post(request):
+def manager_list_all_add_new(request):
     if request.method == 'GET':
         equipamentos = Equipamento.objects.all().order_by('-id')
         serializer_get = EquipamentoSerializer(equipamentos, many=True)
@@ -24,17 +24,22 @@ def equipamentos_get_post(request):
         return Response(serializer_post.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['GET'])
-def equipamentos_read(request, pk):
+@api_view(['GET', 'PUT', 'DELETE'])
+def manager_read_update_delete(request, pk):
     if request.method == 'GET':
-        return Response(f"EU SOU O READ id {pk}")
+        equipamento = Equipamento.objects.get(pk=pk)
+        serializer = EquipamentoSerializer(equipamento, many=False)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        equipamento = Equipamento.objects.get(pk=pk)
+        serializer = EquipamentoSerializer(instance=equipamento, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        equipamento = Equipamento.objects.get(pk=pk)
+        equipamento.delete()
+        return Response("Item deletado com sucesso!", status=status.HTTP_204_NO_CONTENT)
+    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-
-@api_view(['PUT'])
-def equipamentos_edit(request, pk):
-    return Response()
-
-
-@api_view(['DELETE'])
-def equipamentos_delete(request, pk):
-    return Response()
