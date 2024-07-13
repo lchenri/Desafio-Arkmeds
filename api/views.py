@@ -1,14 +1,20 @@
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
+
+from api.models import Equipamento
+from api.serializers import EquipamentoSerializer
+
+
 # import serializer aqui
 
 
 @api_view(['GET', 'POST'])
 def equipamentos_get_post(request):
     if request.method == 'GET':
-        equipamento = {'nome': 'Respirador', 'modelo': 'Novo'}
-        return Response(equipamento)
+        equipamentos = Equipamento.objects.all().order_by('-id')
+        serializer = EquipamentoSerializer(equipamentos, many=True)
+        return Response(serializer.data)
     elif request.method == 'POST':
         return Response(request.data)
 
