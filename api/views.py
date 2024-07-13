@@ -13,10 +13,15 @@ from api.serializers import EquipamentoSerializer
 def equipamentos_get_post(request):
     if request.method == 'GET':
         equipamentos = Equipamento.objects.all().order_by('-id')
-        serializer = EquipamentoSerializer(equipamentos, many=True)
-        return Response(serializer.data)
+        serializer_get = EquipamentoSerializer(equipamentos, many=True)
+        return Response(serializer_get.data)
     elif request.method == 'POST':
-        return Response(request.data)
+        serializer_post = EquipamentoSerializer(data=request.data)
+
+        if serializer_post.is_valid():
+            serializer_post.save()
+
+        return Response(serializer_post.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET'])
