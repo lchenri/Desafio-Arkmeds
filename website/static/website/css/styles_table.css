@@ -131,3 +131,10 @@
     float: right;
     padding: 0.4rem 1.0rem;
 }
+
+@media (max-width: 990px){
+
+    .button-caption{
+        float: none;
+    }
+}
