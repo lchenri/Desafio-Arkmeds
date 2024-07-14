@@ -1,10 +1,157 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="table-body">
+    <div class="table-widget">
+        <!-- generate table here -->
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js" integrity="sha512-jB0TkTBeQC9ZSkBqDhdmfTv1qdfbWpGE72yJ/01Srq6hEzZIz2xkz1e57p9ai7IeHMwEG7HpzG6NdptChif5Pg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const equipamentos = [
+        {
+            "id": 7,
+            "tipo": "Valoranto",
+            "fabricante": "RiotGames",
+            "modelo": "pegaNewba",
+            "numero_de_serie": "006OX20390",
+            "data_compra": "17/07/2019",
+            "valor_compra": 250.99
+        },
+        {
+            "id": 6,
+            "tipo": "Testiandte",
+            "fabricante": "O3",
+            "modelo": "OX2dsds0",
+            "numero_de_serie": "006OX20390",
+            "data_compra": "17/07/2019",
+            "valor_compra": 4000.0
+        },
+        {
+            "id": 5,
+            "tipo": "Oxigênio",
+            "fabricante": "O3-Company LTDA",
+            "modelo": "OX20",
+            "numero_de_serie": "006OX20390",
+            "data_compra": "17/07/2019",
+            "valor_compra": 4000.0
+        },
+        {
+            "id": 3,
+            "tipo": "Maquinario",
+            "fabricante": "Machenike",
+            "modelo": "CTRL202",
+            "numero_de_serie": "001CT20RL",
+            "data_compra": "11/11/2010",
+            "valor_compra": 159.9
+        },
+        {
+            "id": 2,
+            "tipo": "Desfibrilador",
+            "fabricante": "Sanatoshi",
+            "modelo": "DFST03",
+            "numero_de_serie": "003SRDF",
+            "data_compra": "11/11/91",
+            "valor_compra": 253.9
+        },
+        {
+            "id": 1,
+            "tipo": "Respirador",
+            "fabricante": "Sanatoshi",
+            "modelo": "ST03",
+            "numero_de_serie": "001SR",
+            "data_compra": "11/11/01",
+            "valor_compra": 25.3
+        }
+    ];
+
+    const tableWidget = document.getElementsByClassName('table-widget');
+
+    const itemsOnPage = 5;
+
+    const numberOfPages = Math.ceil(equipamentos.length / itemsOnPage);
+
+    const start = (new URLSearchParams(window.location.search)).get('page') || 1;
+
+    const mappedRecords = equipamentos
+        .filter((_, i) => (
+                ((start - 1) * itemsOnPage) < i + 1) &&
+            (i+1 <= start * itemsOnPage)
+        )
+        .map(
+            (equipamento) => {
+                return `<tr>
+                <td>
+                    ${equipamento.tipo}
+                </td>
+                <td>
+                    ${equipamento.fabricante}
+                </td>
+                <td>
+                    <span class="valor-compra-highlighted">
+                        R$ ${equipamento.valor_compra}
+                    </span>
+                </td>
+                <td>
+                    ${equipamento.modelo}
+                </td>
+                <td>
+                    ${equipamento.numero_de_serie}
+                </td>
+                <td>
+                    <span class="icons-actions-container">
+                        <a href="#view"><i class="fa-solid fa-eye"></i></a>
+                        <a href="#edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="#delete"><i class="fa-solid fa-trash-can"></i></a>
+                    </span>
+                </td>
+            </tr>`;
+            }
+        );
+
+
+    const linkList = [];
+
+    for (let i = 0; i < numberOfPages; i++) {
+        const pageNumber = i + 1;
+        linkList.push(
+            `<li>
+            <a
+                href="?page=${pageNumber}"
+                ${pageNumber == start ? 'class="active"' : ''}
+                title="page ${pageNumber}">
+                ${pageNumber}
+            </a>
+        </li>`
+        );
+    }
+
+    const table = DOMPurify.sanitize(`<table>
+    <caption>
+        Equipamentos
+        <span class="table-row-count">(${equipamentos.length})</span>
+    </caption>
+    <thead>
+        <tr>
+            <th>Tipo</th>
+            <th>Fabricante</th>
+            <th>Valor de compra</th>
+            <th>Modelo</th>
+            <th>Número de série</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody id="table-rows">
+        ${mappedRecords.join('')}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <ul class="pagination">
+                    <!--? generated pages -->
+                    ${linkList.join('')}
+                </ul>
+            </td>
+        </tr>
+    </tfoot>
+</table>`);
+
+    tableWidget[0].innerHTML = table;
+</script>
