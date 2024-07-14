@@ -20,7 +20,7 @@ async function exportTableToCSV(selector){
             equipamento.id,
             equipamento.tipo,
             equipamento.fabricante,
-            new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(equipamento.valor_compra),
+            (equipamento.valor_compra),
             equipamento.modelo,
             equipamento.numero_de_serie
         ].join(",")
