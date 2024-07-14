@@ -43,7 +43,7 @@
             .map(
                 (equipamento) => {
                     const valor_compra_formatado = currencyFormat.format(equipamento.valor_compra);
-                    return `<tr>
+                    return `<tr data-id="${equipamento.id}">
                     <td>
                         ${equipamento.id}
                     </td>
@@ -124,6 +124,14 @@
     </table>`);
 
         tableWidget[0].innerHTML = table;
+
+        const tableRows = document.querySelectorAll('#table-rows tr');
+        tableRows.forEach(row => {
+            row.addEventListener('click', () => {
+                const equipamentoId = row.getAttribute('data-id');
+                console.log(`Id do equipamento: ${equipamentoId}`);
+            });
+        });
     }
     renderTable();
 </script>
