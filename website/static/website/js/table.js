@@ -27,7 +27,7 @@ async function exportTableToCSV(selector){
         ].join(",")
     ).join("\n");
 
-    const csvHeader = "Id,Tipo,Fabricante,Valor de compra,Modelo,Número de série\n";
+    const csvHeader = "Id,Tipo,Fabricante,Valor de compra,Modelo,Número de série,Data de Compra\n";
     const csvContent = "data:text/csv;charset=utf-8," + csvHeader + equipamentosCsv;
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
