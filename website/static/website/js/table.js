@@ -22,7 +22,8 @@ async function exportTableToCSV(selector){
             equipamento.fabricante,
             (equipamento.valor_compra),
             equipamento.modelo,
-            equipamento.numero_de_serie
+            equipamento.numero_de_serie,
+            equipamento.data_compra
         ].join(",")
     ).join("\n");
 
