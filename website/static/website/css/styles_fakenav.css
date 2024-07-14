@@ -1,0 +1,7 @@
+
+.fake-navbar{
+    background-color: var(--jet);
+    background-origin: border-box;
+    border-radius: 20px;
+    color: var(--white);
+}
