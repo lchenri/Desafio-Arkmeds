@@ -9,6 +9,21 @@ async function fetchEquipamentos(){
     }
 }
 
+function getToken(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0,name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 async function exportTableToCSV(){
     const equipamentos = await fetchEquipamentos();
     const equipamentosCsv = equipamentos.map(equipamento =>
@@ -81,8 +96,8 @@ async function renderTable(){
                     </td>
                     <td>
                         <span class="icons-actions-container">
-                            <a href="view/${equipamento.id}" ><i class="fa-solid fa-eye"></i></a>
-                            <a href="edit/${equipamento.id}"><i class="fa-solid fa-pen"></i></a>
+                            <a href="#" class="view-equipamento" data-id="${equipamento.id}"><i class="fa-solid fa-eye"></i></a>
+                            <a href="editar-equipamento/${equipamento.id}"><i class="fa-solid fa-pen"></i></a>
                             <a href="#" class="delete-equipamento" data-id="${equipamento.id}"><i class="fa-solid fa-trash-can"></i></a>
                         </span>
                     </td>
@@ -151,21 +166,6 @@ async function renderTable(){
         console.log("Exportar CSV clicado!")
     })
 
-    /*const tableRows = document.querySelectorAll('#table-rows tr');
-    tableRows.forEach(row => {
-        row.addEventListener('click', () => {
-            const equipamentoId = row.getAttribute('data-id');
-            console.log(`Id do equipamento: ${equipamentoId}`);
-        });
-    });*/
-
-    /*const deleteRow = document.getElementById("delete-row-equipamento");
-    deleteRow.forEach(icon => {
-        icon.addEventListener('click', () => {
-            const equipamentoId = icon.getAttribute('data-id');
-            console.log(`Apagou o : ${equipamentoId}`);
-        })
-    })*/
 
     const deleteIcons = document.querySelectorAll('.delete-equipamento');
     deleteIcons.forEach(icon => {
@@ -173,10 +173,48 @@ async function renderTable(){
             e.preventDefault();
             const equipamentoId = icon.getAttribute('data-id');
             $('#modal-equipamento-id').text(equipamentoId);
-            $('#exampleModal').modal('show');
+            $('#deleteModal').modal('show');
             $('#delete-confirm-btn').data('equipamentoId', equipamentoId);
         });
     });
+
+    const viewIcons = document.querySelectorAll('.view-equipamento');
+    viewIcons.forEach(icon => {
+        icon.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const equipamentoId = icon.getAttribute('data-id');
+            $('#modal-equipamento-id-view').text(equipamentoId);
+
+            const response = await fetch(`http://127.0.0.1:8000/api/equipamentos/${equipamentoId}/`);
+            if(response.ok){
+                const equipamento = await response.json();
+
+                $('#id-equip').val(equipamento.id);
+                $('#tipo').val(equipamento.tipo);
+                $('#fabricante').val(equipamento.fabricante);
+                $('#modelo').val(equipamento.modelo);
+                $('#numero_de_serie').val(equipamento.numero_de_serie);
+                $('#data_compra').val(equipamento.data_compra);
+                $('#valor_compra').val(equipamento.valor_compra);
+            }else{
+                console.error("Erro ao buscar os dados do equipamento.")
+            }
+
+            $('#viewModal').modal('show');
+            $('#delete-from-view').data('equipamentoId', equipamentoId);
+        });
+    });
+
+
+    $('#delete-from-view').off('click').on('click', function() {
+        const equipamentoId = $(this).data('equipamentoId');
+        $('#modal-equipamento-id').text(equipamentoId);
+        $('#delete-confirm-btn').data('equipamentoId', equipamentoId);
+        $('#viewModal').modal('hide');
+        $('#deleteModal').modal('show');
+    });
+
+
 
     $('#delete-confirm-btn').off('click').on('click', function() {
        const equipamentoId = $(this).data('equipamentoId');
@@ -194,29 +232,13 @@ async function renderTable(){
                 console.error('Erro ao apagar o equipamento');
             }
         });
-        $('#exampleModal').modal('hide');
+        $('#deleteModal').modal('hide');
     });
 
-    /*const deleteIcons = document.querySelectorAll('.delete-equipamento');
-    deleteIcons.forEach(icon => {
-        icon.addEventListener('click', (e) =>{
-            e.preventDefault();
-            const equipamentoId = icon.getAttribute('data-id');
-            if(confirm(`Você deseja apagar o item com o ID ${equipamentoId}?`)){
-                console.log(`${equipamentoId} apagado`);
-                fetch(`http://127.0.0.1:8000/api/equipamentos/${equipamentoId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getToken('csrftoken'),
-                    }
-                }).then((response) => {
-                    renderTable();
-                })
-            }
 
-        })
-    })*/
+
+
+
 }
 
 renderTable();

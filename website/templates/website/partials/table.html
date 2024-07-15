@@ -5,8 +5,8 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal delete-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -23,4 +23,57 @@
         </div>
     </div>
 </div>
+
+<!-- Modal View-->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Visualizar Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-body form-view">
+                    <form class="form-container form-container-view" id="form">
+                        <div class="form-group form-group-view">
+                            <label for="id">Id</label>
+                            <input type="text" id="id-equip" name="id" required readonly>
+                        </div>
+                        <div class="form-group form-group-view">
+                            <label for="tipo">Tipo</label>
+                            <input type="text" id="tipo" name="tipo" required readonly>
+                        </div>
+                        <div class="form-group form-group-view">
+                            <label for="fabricante">Fabricante</label>
+                            <input type="text" id="fabricante" name="fabricante" required readonly>
+                        </div>
+                        <div class="form-group form-group-view">
+                            <label for="modelo">Modelo</label>
+                            <input type="text" id="modelo" name="modelo" required readonly>
+                        </div>
+                        <div class="form-group form-group-view">
+                            <label for="numero_de_serie">Número de série</label>
+                            <input type="text" id="numero_de_serie" name="numero_de_serie" required readonly>
+                        </div>
+                        <div class="form-group form-group-view">
+                            <label for="data_compra">Data de Compra</label>
+                            <input type="text" id="data_compra" name="data_compra"  placeholder="DD/MM/AAAA" readonly>
+                        </div>
+                        <div class="form-group form-group-view">
+                            <label for="valor_compra">Valor de Compra</label>
+                            <input type="text" id="valor_compra" name="valor_compra" readonly>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                <a href="editar-equipamento/"><button type="button" class="btn btn-warning" data-bs-dismiss="modal">Editar</button></a>
+                <button type="button" class="btn btn-danger" id="delete-from-view">Deletar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src={% static 'website/js/table.js' %}></script>
+
 

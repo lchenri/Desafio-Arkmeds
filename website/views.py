@@ -7,3 +7,9 @@ def home(request):
 
 def add_equipamento(request):
     return render(request, 'website/pages/add_equipamento.html')
+
+
+def edit_equipamento(request, pk):
+    context = {'pk': pk}
+
+    return render(request, 'website/pages/edit_equipamento.html', context)

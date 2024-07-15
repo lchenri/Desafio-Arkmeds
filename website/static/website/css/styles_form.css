@@ -8,6 +8,10 @@
     overflow-x: auto;
 }
 
+.form-view{
+    padding: .2rem;
+}
+
 .form-container{
     background: var(--jet);
     min-height: 30rem;
@@ -20,10 +24,19 @@
     padding: 4rem;
 }
 
+.form-container-view{
+    gap: 20px;
+    padding: 2rem;
+}
+
 .form-group {
     flex: 1 1 calc(50% - 40px);
     display: flex;
     flex-direction: column;
+}
+
+.form-group-view{
+    align-items: center;
 }
 
 .form-group label {

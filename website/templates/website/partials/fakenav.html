@@ -6,7 +6,7 @@
         <div class=" align-content-center">
             {% if request.path == '/' %}
                 <a href="{% url 'website:add_equipamento' %}"><button class="button-fold">Adicionar Equipamento</button></a>
-            {% elif request.path == '/adicionar-equipamento' %}
+            {% else %}
                 <a href="{% url 'website:home' %}"><button class="button-fold">Voltar</button></a>
             {% endif %}
         </div>
