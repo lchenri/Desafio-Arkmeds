@@ -51,7 +51,7 @@ function getToken(name) {
     return cookieValue;
 }
 
-function showSucessModal(){
+function showSuccessModal(){
     $('#exampleModal').modal('show');
 }
 
@@ -68,11 +68,11 @@ function sendEquipamentoPostRequest(body) {
         body: JSON.stringify(body),
     })
         .then(response => response.json())
-        .then(data => {
+        .then(() => {
             //colocar modal de sucesso aqui!
             console.log("Recebido com sucesso");
             clearForm();
-            showSucessModal();
+            showSuccessModal();
         })
         .catch((error) => {
             console.error(error);

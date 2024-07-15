@@ -1,19 +1,15 @@
-const apiGet = "http://127.0.0.1:8000/api/equipamentos/"
 async function fetchEquipamentos(){
+    const apiGet = "http://127.0.0.1:8000/api/equipamentos/"
     try{
         const response = await fetch(apiGet);
-        if(!response.ok){
-            throw new Error('Erro ao fazer requisição para a API');
-        }
-        const equipamentos = await response.json();
-        return equipamentos;
+        return await response.json();
     }catch(error){
         console.error("Erro ->", error );
         return [];
     }
 }
 
-async function exportTableToCSV(selector){
+async function exportTableToCSV(){
     const equipamentos = await fetchEquipamentos();
     const equipamentosCsv = equipamentos.map(equipamento =>
         [
@@ -85,9 +81,9 @@ async function renderTable(){
                     </td>
                     <td>
                         <span class="icons-actions-container">
-                            <a href="view/${equipamento.id}"><i class="fa-solid fa-eye"></i></a>
+                            <a href="view/${equipamento.id}" ><i class="fa-solid fa-eye"></i></a>
                             <a href="edit/${equipamento.id}"><i class="fa-solid fa-pen"></i></a>
-                            <a href="delete/${equipamento.id}"><i class="fa-solid fa-trash-can"></i></a>
+                            <a href="#" class="delete-equipamento" data-id="${equipamento.id}"><i class="fa-solid fa-trash-can"></i></a>
                         </span>
                     </td>
                 </tr>`;
@@ -111,11 +107,10 @@ async function renderTable(){
         );
     }
 
-    const table = DOMPurify.sanitize(`<table>
+    tableWidget[0].innerHTML = DOMPurify.sanitize(`<table>
         <caption>
             <span>Equipamentos</span>
             <span class="table-row-count">(${equipamentos.length})</span>
-            <!--<button class="button-fold" id="export-csv-btn">Exportar CSV</button>-->
         </caption>
         <thead>
             <tr>
@@ -135,7 +130,6 @@ async function renderTable(){
             <tr>
                 <td colspan="6">
                     <ul class="pagination">
-                        <!--? generated pages -->
                         ${linkList.join('')}
                     </ul>
                 </td>
@@ -143,7 +137,6 @@ async function renderTable(){
         </tfoot>
     </table>`);
 
-    tableWidget[0].innerHTML = table;
 
     const exportCsvButton = document.createElement('button');
     exportCsvButton.className = 'button-fold button-caption';
@@ -152,20 +145,78 @@ async function renderTable(){
     const caption = tableWidget[0].querySelector('caption');
     caption.appendChild(exportCsvButton);
 
-    exportCsvButton.addEventListener('click', (e) => {
+    exportCsvButton.addEventListener('click', () => {
         //e.preventDefault();
         exportTableToCSV();
         console.log("Exportar CSV clicado!")
     })
 
-    const tableRows = document.querySelectorAll('#table-rows tr');
+    /*const tableRows = document.querySelectorAll('#table-rows tr');
     tableRows.forEach(row => {
         row.addEventListener('click', () => {
             const equipamentoId = row.getAttribute('data-id');
             console.log(`Id do equipamento: ${equipamentoId}`);
         });
-    });
-}
+    });*/
 
+    /*const deleteRow = document.getElementById("delete-row-equipamento");
+    deleteRow.forEach(icon => {
+        icon.addEventListener('click', () => {
+            const equipamentoId = icon.getAttribute('data-id');
+            console.log(`Apagou o : ${equipamentoId}`);
+        })
+    })*/
+
+    const deleteIcons = document.querySelectorAll('.delete-equipamento');
+    deleteIcons.forEach(icon => {
+        icon.addEventListener('click', (e) => {
+            e.preventDefault();
+            const equipamentoId = icon.getAttribute('data-id');
+            $('#modal-equipamento-id').text(equipamentoId);
+            $('#exampleModal').modal('show');
+            $('#delete-confirm-btn').data('equipamentoId', equipamentoId);
+        });
+    });
+
+    $('#delete-confirm-btn').on('click', function() {
+       const equipamentoId = $(this).data('equipamentoId');
+        fetch(`http://127.0.0.1:8000/api/equipamentos/${equipamentoId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getToken('csrftoken'),
+            }
+        }).then((response) => {
+            if(response.ok) {
+                console.log(`${equipamentoId} apagado`);
+                renderTable();
+            } else {
+                console.error('Erro ao apagar o equipamento');
+            }
+        });
+        $('#exampleModal').modal('hide');
+    });
+
+    /*const deleteIcons = document.querySelectorAll('.delete-equipamento');
+    deleteIcons.forEach(icon => {
+        icon.addEventListener('click', (e) =>{
+            e.preventDefault();
+            const equipamentoId = icon.getAttribute('data-id');
+            if(confirm(`Você deseja apagar o item com o ID ${equipamentoId}?`)){
+                console.log(`${equipamentoId} apagado`);
+                fetch(`http://127.0.0.1:8000/api/equipamentos/${equipamentoId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getToken('csrftoken'),
+                    }
+                }).then((response) => {
+                    renderTable();
+                })
+            }
+
+        })
+    })*/
+}
 
 renderTable();
