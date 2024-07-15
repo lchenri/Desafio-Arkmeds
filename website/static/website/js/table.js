@@ -178,7 +178,7 @@ async function renderTable(){
         });
     });
 
-    $('#delete-confirm-btn').on('click', function() {
+    $('#delete-confirm-btn').off('click').on('click', function() {
        const equipamentoId = $(this).data('equipamentoId');
         fetch(`http://127.0.0.1:8000/api/equipamentos/${equipamentoId}/`, {
             method: 'DELETE',
