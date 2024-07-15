@@ -1,7 +1,7 @@
-const api = "http://127.0.0.1:8000/api/equipamentos/"
+const apiGet = "http://127.0.0.1:8000/api/equipamentos/"
 async function fetchEquipamentos(){
     try{
-        const response = await fetch(api);
+        const response = await fetch(apiGet);
         if(!response.ok){
             throw new Error('Erro ao fazer requisição para a API');
         }
@@ -43,7 +43,7 @@ async function renderTable(){
     const equipamentos = await fetchEquipamentos();
     const tableWidget = document.getElementsByClassName('table-widget');
 
-    const itemsOnPage = 5;
+    const itemsOnPage = 12;
 
     const numberOfPages = Math.ceil(equipamentos.length / itemsOnPage);
 

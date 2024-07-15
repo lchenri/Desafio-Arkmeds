@@ -4,7 +4,23 @@
     --jet: #353535;
     --caribbeancurrent: #3C6E71;
     --indigodye: #284B63;
+    --bs-btn-bg:red;
 }
+
+/* Sobreposição de cores do bootstrap */
+
+.modal-content{
+    --bs-modal-bg: var(--jet);
+    --bs-modal-color: var(--white);
+
+}
+
+.btn-primary{
+    --bs-btn-color: var(--white);
+    --bs-btn-bg: var(--indigodye);
+}
+
+/* Fim */
 
 body{
     background-color: var(--platinum);
