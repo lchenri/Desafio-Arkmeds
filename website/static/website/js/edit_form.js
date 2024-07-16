@@ -53,11 +53,16 @@ function sendEquipamentoPutRequest(body) {
         .then(response => response.json())
         .then(() => {
             //colocar modal de sucesso aqui!
+            showSuccessModal();
             console.log("Atualizado com sucesso");
         })
         .catch((error) => {
             console.error(error);
         });
+}
+
+function showSuccessModal(){
+    $('#exampleModal').modal('show');
 }
 
 
