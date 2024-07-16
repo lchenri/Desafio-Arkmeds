@@ -56,7 +56,9 @@ function showSuccessModal(){
 }
 
 function sendEquipamentoPostRequest(body) {
-    //console.log(body);
+    if(body.valor_compra === ""){
+        body.valor_compra = null;
+    }
     const api = "http://127.0.0.1:8000/api/equipamentos/";
 
     fetch(api, {
