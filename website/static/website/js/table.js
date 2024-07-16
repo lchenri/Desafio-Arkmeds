@@ -196,6 +196,8 @@ async function renderTable(){
                 $('#numero_de_serie').val(equipamento.numero_de_serie);
                 $('#data_compra').val(equipamento.data_compra);
                 $('#valor_compra').val(equipamento.valor_compra);
+
+                $('#edit-button').attr('href', `editar-equipamento/${equipamento.id}`);
             }else{
                 console.error("Erro ao buscar os dados do equipamento.")
             }
