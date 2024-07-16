@@ -1,0 +1,14 @@
+<div class="fake-navbar">
+    <div class="d-flex justify-content-center align-content-center col-md-6 offset-md-3 p-3">
+        <div class=" flex-grow-1 align-content-center">
+            <h1 class="mb-0">Equipamentos</h1>
+        </div>
+        <div class=" align-content-center">
+            {% if request.path == '/' %}
+                <a href="{% url 'website:add_equipamento' %}"><button class="button-fold">Adicionar Equipamento</button></a>
+            {% else %}
+                <a href="{% url 'website:home' %}"><button class="button-fold">Voltar</button></a>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+{% extends 'website/partials/base.html' %}
+{% load static %}
+{% block page-title %}
+    Editar
+{% endblock %}
+{% block content %}
+    <div class="form-body" data-id="{{ pk }}">
+        <form class="form-container" id="form">
+            <div class="form-group">
+                <label for="tipo">Tipo *</label>
+                <input type="text" id="tipo" name="tipo" required>
+            </div>
+            <div class="form-group">
+                <label for="fabricante">Fabricante *</label>
+                <input type="text" id="fabricante" name="fabricante" required>
+            </div>
+            <div class="form-group">
+                <label for="modelo">Modelo *</label>
+                <input type="text" id="modelo" name="modelo" required>
+            </div>
+            <div class="form-group">
+                <label for="numero_de_serie">Número de série *</label>
+                <input type="text" id="numero_de_serie" name="numero_de_serie" required>
+            </div>
+            <div class="form-group">
+                <label for="data_compra">Data de Compra</label>
+                <input type="text" id="data_compra" name="data_compra"  placeholder="DD/MM/AAAA">
+            </div>
+            <div class="form-group">
+                <label for="valor_compra">Valor de Compra</label>
+                <input type="text" id="valor_compra" name="valor_compra">
+            </div>
+            <div class="form-button">
+                <button type="submit" class="save-button">Atualizar</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="{% static 'website/js/edit_form.js' %}"></script>
+{% endblock %}
