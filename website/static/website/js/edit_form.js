@@ -12,17 +12,6 @@ document.getElementById('form').addEventListener('submit', function (e) {
 })
 
 
-function getEquipamentoData() {
-    return {
-        tipo: document.getElementById('tipo').value,
-        fabricante: document.getElementById('fabricante').value,
-        modelo: document.getElementById('modelo').value,
-        numero_de_serie: document.getElementById('numero_de_serie').value,
-        data_compra: document.getElementById('data_compra').value,
-        valor_compra: document.getElementById('valor_compra').value,
-    };
-}
-
 function sendEquipamentoPutRequest(body) {
     //console.log(body);
     if(body.valor_compra === ""){
@@ -59,7 +48,6 @@ async function fetchEquipamentos(){
     if(response.ok) {
         const equipamento = await response.json();
 
-        // Preenche os campos do formulário com os dados do equipamento
         document.getElementById('tipo').value = equipamento.tipo;
         document.getElementById('fabricante').value = equipamento.fabricante;
         document.getElementById('modelo').value = equipamento.modelo;

@@ -1,3 +1,4 @@
+{% load static %}
 <div class="form-body" data-id="{{ pk }}">
     <form class="form-container" id="form">
         <div class="form-group">
@@ -29,3 +30,6 @@
         </div>
     </form>
 </div>
+<script src="{% static 'website/js/common.js' %}"></script>
+<script src="{% static 'website/js/form_common.js' %}"></script>
+<script src="{% static 'website/js/edit_form.js' %}"></script>
