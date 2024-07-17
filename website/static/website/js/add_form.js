@@ -36,20 +36,6 @@ function clearForm(){
     document.getElementById('valor_compra').value = '';
 }
 
-function getToken(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0,name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
 
 function showSuccessModal(){
     $('#exampleModal').modal('show');
@@ -69,7 +55,12 @@ function sendEquipamentoPostRequest(body) {
         },
         body: JSON.stringify(body),
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return new Error(`Erro na requisição: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(() => {
             //colocar modal de sucesso aqui!
             console.log("Recebido com sucesso");
