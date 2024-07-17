@@ -1,5 +1,4 @@
-{% load static %}
-<div class="form-body">
+<div class="form-body" data-id="{{ pk }}">
     <form class="form-container" id="form">
         <div class="form-group">
             <label for="tipo">Tipo *</label>
@@ -26,9 +25,7 @@
             <input type="text" id="valor_compra" name="valor_compra">
         </div>
         <div class="form-button">
-            <button type="submit" class="save-button">Salvar</button>
+            <button type="submit" class="save-button">Atualizar</button>
         </div>
     </form>
-    <script src="{% static 'website/js/common.js' %}"></script>
-    <script src="{% static 'website/js/add_form.js' %}"></script>
 </div>
