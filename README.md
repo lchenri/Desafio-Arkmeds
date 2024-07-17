@@ -1,6 +1,6 @@
 # Desafio Técnico Arkmeds
 
-Projeto que visa desenvolver uma aplicação web com funcionalidades de um CRUD(Create, Read, Update e Delete) utilizando Python, Django, JavaScript, HTML e APIs REST.
+Projeto que visa desenvolver uma aplicação web com funcionalidades de um CRUD(Create, Read, Update e Delete) utilizando Python, Django, JavaScript, HTML e APIs REST, para cadastro de equipamentos.
 
 ## Tecnologias Utilizadas
 - [Python 3.12](https://www.python.org/downloads/)
