@@ -6,6 +6,7 @@ Projeto que visa desenvolver uma aplicação web com funcionalidades de um CRUD(
 - [Python 3.12](https://www.python.org/downloads/)
 - [Django](https://www.djangoproject.com/)
 - [Django Rest Framework](https://www.django-rest-framework.org/)
+- [Coverage.py](https://coverage.readthedocs.io/en/7.6.0/)
 - [Bootstrap](https://getbootstrap.com/)
 - [jQuery](https://jquery.com/)
 - [DOMPurify](https://www.npmjs.com/package/dompurify)
