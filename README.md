@@ -36,8 +36,11 @@ C:\Users\{user}\{Downloads}\Desafio-Arkmeds>
 # Cria um ambiente virtual
 python -m venv .venv
 
-# Ativa o ambiente virtual
+# Ativa o ambiente virtual em sistemas Windows
 .venv\Scripts\activate
+
+# Se estiver utilizando Linux
+source .venv/bin/activate
 ```
 
 4. Com o ambiente virtual ativo, instale as dependências em requirements.txt com o seguinte comando:
