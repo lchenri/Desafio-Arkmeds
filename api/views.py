@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from api.models import Equipamento
 from api.serializers import EquipamentoSerializer
+from django.http import Http404
 
 
 class EquipamentoList(APIView):
@@ -27,7 +28,7 @@ class EquipamentoDetail(APIView):
         try:
             return Equipamento.objects.get(pk=pk)
         except Equipamento.DoesNotExist:
-            return Response("Equipamento não encontrado no sistema", status=status.HTTP_404_NOT_FOUND)
+            raise Http404
 
     def get(self, request, pk):
         equipamento = self.get_object(pk)
